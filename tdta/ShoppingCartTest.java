@@ -16,7 +16,7 @@ public class ShoppingCartTest {
     }
 
     @Test(groups = { "presentation",
-            "story-007" }, dataProvider = "shopping-card-data", description = "verify that liquer items can be added to cart")
+            "story-007" }, description = "verify that liquer items can be added to cart")
     public void add2ItemsToCart() {
         // ARRANGE
         WebStore store = new WebStore("Юшка & Петрушка");
@@ -35,7 +35,7 @@ public class ShoppingCartTest {
     }
 
     @Test(groups = { "presentation",
-            "story-007" }, dataProvider = "shopping-card-data", description = "verify that liquer items can be added to cart")
+            "story-007" }, description = "verify that liquer items can be added to cart")
     public void addLiquerToCart() {
         // ARRANGE
         WebStore store = new WebStore("Юшка & Петрушка");
