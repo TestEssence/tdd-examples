@@ -1,0 +1,10 @@
+{
+  "python.formatting.provider": "black",
+"problems.decorations.enabled": false,
+
+"workbench.colorCustomizations": {
+  "editorError.foreground": "#ff000000",
+  "editorWarning.foreground": "#ff0",
+  "editorInfo.foreground": "#00f"
+}
+}
