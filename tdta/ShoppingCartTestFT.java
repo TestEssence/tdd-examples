@@ -9,29 +9,23 @@ public class ShoppingCartTestFT {
         market = GlobalConfig.getMarket();
     }
 
-    @BeforeMethod()
-    public void CleanUp() {
-        market.cleanUp();
-    }
-
-    @DataProvider(name = "shopping-card-data")
-    public Object[][] dpMethod() {
-        return new Object[][] { { null, null }, { null, null } };
-    }
-
     @Test(groups = { "presentation",
-            "story-007" }, dataProvider = "shopping-card-data", description = "verify that items can be added to cart")
-
-    public void addItemsToCart(User customer, List<Product> products) {
+            "story-007" }, dataProvider = "shopping-card-cases", description = "verify that items can be added to cart")
+    public void addItemsToCart(User customer, List<Product> items) {
         // ARRANGE
-        market.login(customer);
+        customer.login();
         // ACT
-        for (Product product : products) {
-            market.findProduct(product).addToCart(1);
+        for (Product item : items) {
+            customer.addToCart(customer.findProduct(item), 1);
         }
         // ASSERT
-        Cart expectedCart = new Cart(products);
-        Assert.assertEquals(market.getCart(customer), expectedCart);
+        Cart expectedCart = new Cart(items);
+        Assert.assertEquals(customer.getCart(), expectedCart);
+    }
+
+    @DataProvider(name = "shopping-card-cases")
+    public Object[][] shoppingCartCases() {
+        return new Object[][] { { null, null }, { null, null } };
     }
 
 }

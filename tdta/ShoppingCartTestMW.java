@@ -1,15 +1,16 @@
 package tdta;
 
-//step 3: refactor
-public class ShoppingCartTestRF {
+//step 2: make it pass by implementing data provider
+public class ShoppingCartTestMW {
     private WebStoreMarket market;
 
-    public TestShoppingCartMP() {
+    public ShoppingCartTestMW() {
         market = GlobalConfig.getMarket();
     }
 
     @Test(groups = { "presentation",
             "story-007" }, dataProvider = "shopping-card-cases", description = "verify that items can be added to cart")
+
     public void addItemsToCart(User customer, List<Product> items) {
         // ARRANGE
         customer.login();
@@ -24,11 +25,17 @@ public class ShoppingCartTestRF {
 
     @DataProvider(name = "shopping-card-cases")
     public Object[][] shoppingCartCases() {
-        ProductFactory productFactory = new ProductFactory(new WebStore("Юшка & Петрушка"), market);
-        UserFactory userFactory = new UserFactory(market);
-        return new Object[][] {
-                { userFactory.getUser(UserType.MinorCustomer), productFactory.getGroceryItem("Юшка") }
+        WebStore store = new WebStore("Юшка & Петрушка")
+                .register(market);
+        Product soup = new Product("Юшка", 5.99, ProductType.Grocery);
+        store.publishProduct(soup, 500);
+        User customer = new User("Финтик Каленик Кононович", UserType.RegularCustomer).register(market);
+        ArrayList<Product> soup = new ArrayList<Product>() {
+            {
+                add(soup);
+            }
         };
+        return new Object[][] { { customer, soup } };
     }
 
 }

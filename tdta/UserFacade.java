@@ -2,10 +2,14 @@ package tdta;
 
 // WARNING: Don't keep all the application functions
 // in a single facade: use Additional Facades for different features
-interface ApplicationFacade {
-    public User registerUser(User user);
+interface User {
+    public User register(Application app);
 
-    public void unregisterUser(User user);
+    public void unregister();
+
+    public User login();
+
+    public void logout();
 
     public Something createSomething(Something something);
 
@@ -14,29 +18,28 @@ interface ApplicationFacade {
     public void deleteSomething(UUID somethingUuid);
 }
 
-public class UiApplication implements ApplicationFacade {
+public class UiUser implements User {
 }
 
-public class ApiApplication implements ApplicationFacade {
+public class ApiUser implements User {
 }
 
-public class FakeApplication implements ApplicationFacade {
+public class MockUser implements User {
 }
 
 public class SomethingTest {
-    private ApplicationFacade app;
-
     public SomethingTest() {
         app = GlobalConfig.getApp();
     }
 
     @Test(groups = { "validation", "fake" })
-    public void createSomething() {
+    public void mockCreateSomething() {
         // arrange
-        User user = app.registerUser(new User("Odike, Prince of Nigeria", "Odike.II@nigeria.gov.ng"));
-        user.login();
+        User user = new MockUser("Odike, Prince of Nigeria", "Odike.II@nigeria.gov.ng");
+        user.register(app)
+                .login();
         // act
-        Something thing = app.createSomething(new Something("Special"));
+        Something thing = user.createSomething(new Something("Special"));
         // assert
         Assert.assertEquals(thing.getName(), "Special");
     }

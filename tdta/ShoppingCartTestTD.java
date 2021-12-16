@@ -1,10 +1,10 @@
 package tdta;
 
 //step 3: refactor
-public class ShoppingCartTestRF {
+public class ShoppingCartTestTD {
     private WebStoreMarket market;
 
-    public TestShoppingCartMP() {
+    public TestShoppingCartTD() {
         market = GlobalConfig.getMarket();
     }
 
@@ -27,8 +27,10 @@ public class ShoppingCartTestRF {
         ProductFactory productFactory = new ProductFactory(new WebStore("Юшка & Петрушка"), market);
         UserFactory userFactory = new UserFactory(market);
         return new Object[][] {
-                { userFactory.getUser(UserType.MinorCustomer), productFactory.getGroceryItem("Юшка") }
+                { userFactory.getUser(UserType.RegularCustomer), productFactory.getMenu() },
+                { userFactory.getUser(UserType.PremiumCustomer), productFactory.getAdultMenu() },
+                { userFactory.getUser(UserType.MinorCustomer), productFactory.getGroceryItem("Юшка") },
+                { userFactory.getUser(UserType.SystemAdministrator), productFactory.getDoubleMenu() },
         };
     }
-
 }
